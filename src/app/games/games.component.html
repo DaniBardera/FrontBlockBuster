@@ -1,0 +1,48 @@
+<!-- El interrogante mira si el objeto es null, si lo es no lo tiene en cuenta lo demás-->
+<div *ngIf="games?.length == 0" class="alert alert-info">
+    No hay juegos en la BBDD
+</div>
+
+<div class="my-3 pr-4 text-right">
+    <button class="btn btn-primary" type="button" routerLink="/games/form">
+        Crear Juego
+    </button>
+</div>
+
+<div *ngIf="games?.length > 0" class="card border-primary mb-3">
+    <div class="card-header">Juegos
+        <button type="button" class="btn btn-primary float-right" (click)="switchId()">
+                {{showId ? 'Ocultar' : 'Mostrar'}} ID
+            </button>
+    </div>
+    <div class="card-body text-primary">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <th *ngIf="showId">ID</th>
+                <th>Título</th>
+                <th>Fecha Lanzamiento</th>
+                <th>Precio</th>
+                <th>Pegi</th>
+                <th>Categoria</th>
+                <th>Compañía</th>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let game of games">
+                    <td *ngIf="showId">{{game.idJuego}}</td>
+                    <td>{{game.titulo}}</td>
+                    <td>{{game.fechaLanzamiento | date: "dd/MM/yyyy"}} </td>
+                    <td>{{game.precio}}</td>
+                    <td>{{game.pegi}}</td>
+                    <td>{{game.categoria}}</td>
+                    <td>
+                        <span *ngFor="let company of game.companies">
+                            {{company.nombre}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
