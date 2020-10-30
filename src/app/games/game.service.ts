@@ -34,8 +34,14 @@ export class GameService {
   createGame(juego: Game): Observable<Game> {
     return this.http.post<Game>(this.urlServer + 'juegos', juego, {headers: this.httpHeaders}).pipe(
       catchError(e => {
-        console.error(`create error: "${e.message}"`);
-        this.alertService.error(`Error al crear el juego: "${e.message}"`);
+        console.error(`update error: "${e.message}"`);
+        if (e.status == 400) {
+          e.error.errorMessage.replace('[', '').replace(']', '').split(', ').reverse().forEach(errorMessage => {
+            this.alertService.error(errorMessage);
+          });
+        } else {
+          this.alertService.error(`Error al crear el juego: "${e.message}"`);
+        }
         return throwError(e);
       })
     );
@@ -48,8 +54,7 @@ export class GameService {
         // Mostramos el error por consola
         console.error(`getGame error: "${e.message}"`);
         // Mostramos el error al usuario
-        this.alertService.error(`Error al consultar el juego: "${e.message}"`,
-                                {autoClose: true, keepAfterRouteChange: false});
+        this.alertService.error(`Error al consultar el juego: "${e.message}"`);
         return throwError(e);
       })
     );
@@ -60,15 +65,30 @@ export class GameService {
     return this.http.put<Game>(`${this.urlServer}juegos/${juego.idJuego}`,
     juego, {headers: this.httpHeaders}).pipe(  // Permite operacionar con el observable
       catchError(e => {
-        // Mostramos el error por consola
-        console.error(`updateGame error: "${e.message}"`);
-        // Mostramos el error al usuario
-        this.alertService.error(`Error al actualizar el juego: "${e.message}"`,
-                                {autoClose: true, keepAfterRouteChange: false});
+        console.error(`update error: "${e.message}"`);
+        if (e.status == 400) {
+          e.error.errorMessage.replace('[', '').replace(']', '').split(', ').reverse().forEach(errorMessage => {
+            this.alertService.error(errorMessage);
+          });
+        } else {
+          this.alertService.error(`Error al actualizar el juego: "${e.message}"`);
+        }
         return throwError(e);
       })
     );
   }
 
+  deleteGame(id: number): Observable<any>{
+    // LLamada a la API para obtener los juegos
+    return this.http.delete(`${this.urlServer}juegos/${id}`).pipe(  // Permite operacionar con el observable
+      catchError(e => {
+        // Mostramos el error por consola
+        console.error(`deleteGame error: "${e.message}"`);
+        // Mostramos el error al usuario
+        this.alertService.error(`Error al borrar el juego: "${e.message}"`);
+        return throwError(e);
+      })
+    );
+  }
 
 }

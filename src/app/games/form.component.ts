@@ -4,6 +4,7 @@ import { GameService } from './game.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../companies/company';
 import { CompanyService } from '../companies/company.service';
+import { AlertService } from '../alert/alert.service';
 
 @Component({
   selector: 'app-form',
@@ -26,7 +27,8 @@ export class FormComponent implements OnInit {
   constructor(private gameService: GameService,
               private router: Router,
               private companyService: CompanyService,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.companyService.getCompanies().subscribe(
@@ -36,15 +38,18 @@ export class FormComponent implements OnInit {
   }
 
   create(): void{
-    this.gameService.createGame(this.game).subscribe(
-      // Usamos el enrutador para navegar al listado de juegos al finalizar
-      response => this.router.navigate(['/games'])
-    );
+    this.gameService.createGame(this.game).subscribe(juego => {
+      this.alertService.success(`Se ha creado correctamente el juego "${juego.titulo}" con ID: ${juego.idJuego}`, {autoClose: true});
+      this.router.navigate(['/games']);
+    });
   }
 
+
   public update(): void {
-    this.gameService.updateGame(this.game).subscribe(
-      response => this.router.navigate(['/games'])
+    this.gameService.updateGame(this.game).subscribe(juego => {
+      this.alertService.success(`Se ha actualizado correctamente el juego "${juego.titulo}" con ID: ${juego.idJuego}`, {autoClose: true});
+      this.router.navigate(['/games']);
+    }
     );
   }
 

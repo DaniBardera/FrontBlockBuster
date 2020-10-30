@@ -25,6 +25,7 @@
                 <th>Pegi</th>
                 <th>Categoria</th>
                 <th>Compañía</th>
+                <th>Acciones</th>
             </thead>
 
             <tbody>
@@ -39,6 +40,14 @@
                         <span *ngFor="let company of game.companies">
                             {{company.nombre}}
                         </span>
+                    </td>
+                    <td>
+                        <button type="button" [routerLink]="['form', game.idJuego]" class="btn btn-primary btn-sm">
+                            Editar
+                        </button>
+                        <button type="button" (click)="deleteGame(game)" class="btn btn-danger btn-sm ml-2">
+                            Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>

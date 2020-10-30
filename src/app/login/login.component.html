@@ -1,0 +1,38 @@
+<div class="card bg-light">
+    <div class="card-header">Login</div>
+    <div class="card-body">
+        <form #loginForm="ngForm">
+            <div class="form-group row">
+                <label for="username" class="col-form-label col-sm-3">Nombre de usuario</label>
+                <div class="col-sm-6">
+                    <input name="username" type="text" class="form-control" [(ngModel)]="crendentials.username" placeholder="Nombre de usuario" maxlength="255" required #username="ngModel">
+                    <!-- Alertas-->
+                    <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+                        <!-- Alerta de campo obligatorio-->
+                        <div *ngIf="username.errors.required">
+                            Debe rellenar el campo: Nombre de usuario
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-form-label col-sm-3">Título</label>
+                <div class="col-sm-6">
+                    <input name="password" type="password" class="form-control" [(ngModel)]="crendentials.password" placeholder="Pasword" maxlength="255" required #password="ngModel">
+                    <!-- Alertas-->
+                    <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <!-- Alerta de campo obligatorio-->
+                        <div *ngIf="password.errors.required">
+                            Debe rellenar el campo: Password
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <button class="btn btn-primary" (click)="login()" [disabled]="!loginForm.form.valid">Ingresar</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import { CompaniesComponent } from './companies/companies.component';
 import { FormComponent as GamesFormComponent} from './games/form.component';
 import { FormsModule } from '@angular/forms';
 import { CompanyService } from './companies/company.service';
+import { LoginComponent } from './login/login.component';
 
 // Creamos las rutas
 const ROUTES: Routes = [
@@ -20,6 +21,7 @@ const ROUTES: Routes = [
   {path: 'games/form', component: GamesFormComponent},
   {path: 'games/form/:id', component: GamesFormComponent},
   {path: 'companies', component: CompaniesComponent},
+  {path: 'login', component: LoginComponent},
   {path: '', redirectTo: '/games', pathMatch: 'full'}
 ];
 
@@ -32,7 +34,8 @@ const ROUTES: Routes = [
     GamesComponent,
     AlertComponent,
     CompaniesComponent,
-    GamesFormComponent
+    GamesFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

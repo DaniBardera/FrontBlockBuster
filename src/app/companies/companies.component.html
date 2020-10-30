@@ -24,8 +24,9 @@
                     <td>{{company.nombre}}</td>
                     <td>{{company.cif}}</td>
                     <td>
-                        <span *ngFor="let game of company.juegos">
-                            {{game.titulo}}
+                        <span *ngFor="let juego of company.juegos; index as i">
+                            <a [routerLink]="['/games/form', juego.idJuego]">{{ juego.titulo }}</a>
+                            {{(company.juegos.length > 1 && i < company.juegos.length - 1) ? ', ' : ''}}
                         </span>
                     </td>
                 </tr>
